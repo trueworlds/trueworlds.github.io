@@ -91,14 +91,7 @@
             }
           },
           "404" : {
-            "description" : "Player Not found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/responses/PlayerNotFound"
-                }
-              }
-            }
+            "description" : "Player Not found"
           }
         }
       }
@@ -150,14 +143,7 @@
             }
           },
           "404" : {
-            "description" : "Player Not found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/responses/PlayerNotFound"
-                }
-              }
-            }
+            "description" : "Player Not found"
           }
         }
       }
@@ -407,24 +393,6 @@
           "achievement" : {
             "type" : "string",
             "example" : "chathirmu"
-          }
-        }
-      }
-    },
-    "responses" : {
-      "PlayerNotFound" : {
-        "description" : "The specified player was not found",
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "type" : "object",
-              "properties" : {
-                "error" : {
-                  "type" : "string",
-                  "enum" : [ "player_not_found" ]
-                }
-              }
-            }
           }
         }
       }
