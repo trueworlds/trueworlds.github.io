@@ -12,6 +12,7 @@
   "paths" : {
     "/achievements" : {
       "get" : {
+        "summary" : "Retrieve all achievement types",
         "responses" : {
           "200" : {
             "description" : "Achievement types",
@@ -31,6 +32,7 @@
     },
     "/ranks" : {
       "get" : {
+        "summary" : "Retrieve all playtime and staff ranks",
         "responses" : {
           "200" : {
             "description" : "Ranks",
@@ -50,6 +52,7 @@
     },
     "/stats" : {
       "get" : {
+        "summary" : "Retrieve stats about True Worlds",
         "responses" : {
           "200" : {
             "description" : "Stats",
@@ -66,16 +69,16 @@
     },
     "/players/{username_or_uuid}" : {
       "get" : {
+        "summary" : "Retrieve player achievements, punishments, playtime",
         "parameters" : [ {
           "name" : "username_or_uuid",
-          "description" : "Players username or UUID",
+          "description" : "Username or UUID",
           "in" : "path",
           "required" : true,
           "schema" : {
             "type" : "string"
           }
         } ],
-        "description" : "Pelaajan tiedot",
         "responses" : {
           "200" : {
             "description" : "Players details",
@@ -90,18 +93,9 @@
         }
       }
     },
-    "/shops/{username_or_uuid}" : {
+    "/shops" : {
       "get" : {
-        "parameters" : [ {
-          "name" : "username_or_uuid",
-          "description" : "Players username or UUID",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "description" : "List players shops",
+        "summary" : "Retrieve all shops in Survival server",
         "responses" : {
           "200" : {
             "description" : "List of shops",
@@ -119,9 +113,18 @@
         }
       }
     },
-    "/shops" : {
+    "/shops/{shop_owner}" : {
       "get" : {
-        "description" : "List all shops",
+        "summary" : "Retrieve shops in Survival server",
+        "parameters" : [ {
+          "name" : "shop_owner",
+          "description" : "Username, UUID or string 'admin'",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "List of shops",
