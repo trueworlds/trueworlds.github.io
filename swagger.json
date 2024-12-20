@@ -1,0 +1,377 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "True Worlds API",
+    "description" : "Julkiset rajapinnat",
+    "version" : "3"
+  },
+  "servers" : [ {
+    "url" : "https://trueworlds.net/api/v3"
+  } ],
+  "security" : [ { } ],
+  "paths" : {
+    "/achievements" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "Achievement types",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/AchievementType"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ranks" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "Ranks",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Rank"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "Stats",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Stats"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{username_or_uuid}" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "username_or_uuid",
+          "description" : "Players username or UUID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "description" : "Pelaajan tiedot",
+        "responses" : {
+          "200" : {
+            "description" : "Players details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Player"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{username_or_uuid}" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "username_or_uuid",
+          "description" : "Players username or UUID",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "description" : "List players shops",
+        "responses" : {
+          "200" : {
+            "description" : "List of shops",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Shop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops" : {
+      "get" : {
+        "description" : "List all shops",
+        "responses" : {
+          "200" : {
+            "description" : "List of shops",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Shop"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Rank" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of rank",
+            "example" : "Double-Respected"
+          },
+          "staff" : {
+            "type" : "boolean",
+            "description" : "True if this rank is for members of staff"
+          },
+          "prefix" : {
+            "type" : "string",
+            "description" : "A smiley for different Respected ranks. Name of rank for staff-ranks",
+            "nullable" : true,
+            "example" : "ü"
+          },
+          "color_hex" : {
+            "type" : "string",
+            "description" : "Hex color of the rank",
+            "example" : "ff55ff"
+          },
+          "color_minecraft" : {
+            "type" : "string",
+            "description" : "If limited to only Minecrafts own colors",
+            "example" : "light_purple"
+          },
+          "playtime_required" : {
+            "type" : "integer",
+            "description" : "Playtime (in seconds) required for this rank. Null if staff-rank",
+            "nullable" : true,
+            "example" : 14400000
+          },
+          "playtime_required_human" : {
+            "type" : "string",
+            "description" : "Humanreadable playtime requirement. Null if staff-rank",
+            "nullable" : true,
+            "example" : "4000h"
+          }
+        }
+      },
+      "Stats" : {
+        "type" : "object",
+        "properties" : {
+          "unique_players" : {
+            "type" : "integer",
+            "description" : "Number of unique players visited. Updates every 24h",
+            "example" : 27884
+          }
+        }
+      },
+      "AchievementType" : {
+        "type" : "object",
+        "properties" : {
+          "slug" : {
+            "type" : "string",
+            "example" : "chathirmu"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Chathirmu"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "Eniten Reaction voittoja saanut"
+          },
+          "emoji" : {
+            "type" : "string",
+            "example" : "✏️"
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "monthly",
+            "enum" : [ "monthly", "yearly", "custom" ]
+          }
+        }
+      },
+      "Shop" : {
+        "type" : "object",
+        "properties" : {
+          "owner" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "world" : {
+            "type" : "string",
+            "enum" : [ "Survival" ]
+          },
+          "x" : {
+            "type" : "integer"
+          },
+          "y" : {
+            "type" : "integer"
+          },
+          "z" : {
+            "type" : "integer"
+          },
+          "price" : {
+            "type" : "integer"
+          },
+          "priceSell" : {
+            "type" : "integer"
+          },
+          "amount" : {
+            "type" : "integer"
+          },
+          "stock" : {
+            "type" : "integer"
+          },
+          "item" : {
+            "type" : "object",
+            "additionalProperties" : true,
+            "example" : {
+              "==" : "org.bukkit.inventory.ItemStack",
+              "v" : 3955,
+              "type" : "DIAMOND_PICKAXE",
+              "meta" : {
+                "==" : "ItemMeta",
+                "meta-type" : "UNSPECIFIC",
+                "enchants" : {
+                  "minecraft:efficiency" : 5,
+                  "minecraft:silk_touch" : 1,
+                  "minecraft:unbreaking" : 3
+                }
+              }
+            }
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "sell", "buy", "combo", "admin buy", "admin sell" ]
+          }
+        }
+      },
+      "Player" : {
+        "type" : "object",
+        "properties" : {
+          "username" : {
+            "type" : "string",
+            "example" : "jeeukko",
+            "minLength" : 3,
+            "maxLength" : 16
+          },
+          "uuid" : {
+            "type" : "string",
+            "example" : "6825974a-7b2d-47e9-9155-1c568ceed43c",
+            "format" : "uuid"
+          },
+          "playtime" : {
+            "type" : "integer",
+            "example" : 10402977,
+            "minimum" : 0
+          },
+          "playtime_human" : {
+            "type" : "string",
+            "example" : "2889h 42m"
+          },
+          "playtime_rank" : {
+            "type" : "string",
+            "example" : "Respected"
+          },
+          "firstlogin" : {
+            "type" : "string",
+            "format" : "date-time",
+            "nullable" : true,
+            "example" : "2012-06-14T23:05:12+03:00"
+          },
+          "lastlogin" : {
+            "type" : "string",
+            "format" : "date-time",
+            "nullable" : true,
+            "example" : "2024-12-08T14:30:08+02:00"
+          },
+          "punishments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Punishment"
+            }
+          },
+          "achievements" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/AchievementEntry"
+            }
+          }
+        }
+      },
+      "Punishment" : {
+        "type" : "object",
+        "properties" : {
+          "reason" : {
+            "type" : "string",
+            "example" : "xray, oresta oreen"
+          },
+          "staff" : {
+            "type" : "string",
+            "example" : "AdamTheAdmin"
+          },
+          "start" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "end" : {
+            "type" : "string",
+            "format" : "date-time",
+            "nullable" : true
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "ban", "mute", "permaban", "warning", "note", "kick", "tuntematon" ]
+          }
+        }
+      },
+      "AchievementEntry" : {
+        "type" : "object",
+        "properties" : {
+          "issued" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "placement" : {
+            "type" : "integer",
+            "nullable" : true
+          },
+          "achievement" : {
+            "type" : "string",
+            "example" : "chathirmu"
+          }
+        }
+      }
+    }
+  }
+}
