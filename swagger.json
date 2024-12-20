@@ -89,6 +89,16 @@
                 }
               }
             }
+          },
+          "404" : {
+            "description" : "Player Not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/responses/PlayerNotFound"
+                }
+              }
+            }
           }
         }
       }
@@ -135,6 +145,16 @@
                   "items" : {
                     "$ref" : "#/components/schemas/Shop"
                   }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Player Not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/responses/PlayerNotFound"
                 }
               }
             }
@@ -225,10 +245,16 @@
       },
       "Shop" : {
         "type" : "object",
+        "description" : "Properties \"price_sell\" and \"price_buy\" tells the price in \"sell\" and \"buy\" shops, \"combo\" has both.\nIn \"barter\" shops the \"price_sell\" tells how many \"item_currency\" the shop want for \"amount\" of \"item\"\n",
         "properties" : {
           "owner" : {
-            "type" : "string",
-            "format" : "uuid"
+            "oneOf" : [ {
+              "type" : "string",
+              "format" : "uuid"
+            }, {
+              "type" : "string",
+              "enum" : [ "admin" ]
+            } ]
           },
           "world" : {
             "type" : "string",
@@ -243,10 +269,10 @@
           "z" : {
             "type" : "integer"
           },
-          "price" : {
+          "price_sell" : {
             "type" : "integer"
           },
-          "priceSell" : {
+          "price_buy" : {
             "type" : "integer"
           },
           "amount" : {
@@ -273,9 +299,18 @@
               }
             }
           },
+          "item_currency" : {
+            "type" : "object",
+            "additionalProperties" : true,
+            "example" : {
+              "==" : "org.bukkit.inventory.ItemStack",
+              "v" : 3955,
+              "type" : "STICK"
+            }
+          },
           "type" : {
             "type" : "string",
-            "enum" : [ "sell", "buy", "combo", "admin buy", "admin sell" ]
+            "enum" : [ "sell", "buy", "combo", "barter", "admin buy", "admin sell" ]
           }
         }
       },
@@ -372,6 +407,24 @@
           "achievement" : {
             "type" : "string",
             "example" : "chathirmu"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "PlayerNotFound" : {
+        "description" : "The specified player was not found",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "error" : {
+                  "type" : "string",
+                  "enum" : [ "player_not_found" ]
+                }
+              }
+            }
           }
         }
       }
