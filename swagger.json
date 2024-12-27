@@ -196,10 +196,20 @@
       "Stats" : {
         "type" : "object",
         "properties" : {
-          "unique_players" : {
+          "unique_players_total" : {
             "type" : "integer",
-            "description" : "Number of unique players visited. Updates every 24h",
+            "description" : "Number of unique players visited ever",
             "example" : 27884
+          },
+          "unique_players_7d" : {
+            "type" : "integer",
+            "description" : "Number of unique players visited in last 7 days",
+            "example" : 70
+          },
+          "unique_players_24h" : {
+            "type" : "integer",
+            "description" : "Number of unique players visited in last 24 hours",
+            "example" : 10
           }
         }
       },
