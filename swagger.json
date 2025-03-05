@@ -230,6 +230,7 @@
           },
           "emoji" : {
             "type" : "string",
+            "description" : "Either Unicode emoji or custom Discord emoji",
             "example" : "✏️"
           },
           "type" : {
@@ -398,6 +399,7 @@
           },
           "placement" : {
             "type" : "integer",
+            "minimum" : 1,
             "nullable" : true
           },
           "achievement" : {
